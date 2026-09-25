@@ -124,3 +124,11 @@ kubectl -n <namespace> delete pod <podName> --force --grace-period=0
     "https://repo.walkingtree.tech/v2/token?scope=repository:<repo-path>:pull&service=repo.walkingtree.tech"
   ```
   A JSON `{"token": "..."}` response means the credential is valid; a 403 means the password itself is wrong.
+
+
+### restart stuck pods (run in each cluster)
+```bash
+kubectl get pods -A --no-headers | awk '$4 ~ /ImagePullBackOff|ErrImagePull/ {print $1, $2}' | while read n p; do kubectl -n $n delete pod $p; done
+kubectl get pods -A --no-headers | grep -Ei "ImagePull|ErrImage"
+```
+  
