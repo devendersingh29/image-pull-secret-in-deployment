@@ -131,4 +131,5 @@ kubectl -n <namespace> delete pod <podName> --force --grace-period=0
 kubectl get pods -A --no-headers | awk '$4 ~ /ImagePullBackOff|ErrImagePull/ {print $1, $2}' | while read n p; do kubectl -n $n delete pod $p; done
 kubectl get pods -A --no-headers | grep -Ei "ImagePull|ErrImage"
 ```
+
   
